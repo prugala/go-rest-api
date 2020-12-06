@@ -28,16 +28,19 @@ import (
 //@host localhost:8080
 //@BasePath /
 func main() {
+	hostname := os.Getenv("URL_SCHEME") + os.Getenv("HOST") + ":" + os.Getenv("PORT")
 	gin.SetMode(os.Getenv("GIN_MODE"))
-	gin := gin.Default()
+	g := gin.Default()
+
 	google.Setup(
-		os.Getenv("URL_SCHEME")+os.Getenv("HOST")+os.Getenv("OAUTH_REDIRECT_URL"),
+		hostname+os.Getenv("OAUTH_REDIRECT_URL"),
 		os.Getenv("OAUTH_CREDENTIALS_FILE"),
 		[]string{os.Getenv("OAUTH_SCOPE")},
 		[]byte(os.Getenv("SECRET")),
 	)
 	url := ginSwagger.URL("http://localhost:8080/swagger/doc.json")
-	gin.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
-	registerRouter(gin)
-	gin.Run(os.Getenv("HOST"))
+	g.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
+	registerRouter(g)
+
+	g.Run(":" + os.Getenv("PORT"))
 }
