@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  app:
+    build: scripts/docker/go
+    volumes:
+      - ./:/app
+    ports:
+      - ${PORT:-8080}:${PORT:-8080}
+    command: >
+      sh -c "cp .env.dist .env &&
+             cp oauth.google.json.dist oauth.google.json &&
+             swag init &&
+             CompileDaemon --include=.env --include=oauth.google.json --build='go build -o ./build/main .' --command=./build/main"

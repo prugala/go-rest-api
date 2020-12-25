@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"main/middleware"
 )
@@ -13,5 +14,6 @@ import (
 //@Failure 401 {object} model.ErrorResponse "Token is expired"
 //@Router /refresh_token [get]
 func RefreshTokenHandler(c *gin.Context) {
+	fmt.Println("test")
 	middleware.AuthMiddleware().RefreshHandler(c)
 }
