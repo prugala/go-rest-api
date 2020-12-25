@@ -12,7 +12,7 @@ import (
 
 //@title Example API
 //@version 1.0
-//@description This is a example API with oauth and jwt.
+//@description This is an example API with oauth and jwt.
 //@termsOfService http://swagger.io/terms/
 //
 //@contact.name Piotr Rugala
